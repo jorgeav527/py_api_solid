@@ -24,3 +24,7 @@ build-backend = "uv_build"
 dev = [
     "ruff>=0.13.3",
 ]
+
+[tool.ty.rules]
+missing-argument = "warn"
+non-subscriptable = "warn"

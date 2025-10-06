@@ -7,6 +7,7 @@ DB_NAME = os.getenv("DB_NAME", "solid_example_db")
 # Global client reference (singleton)
 client: AsyncIOMotorClient | None = None
 
+
 async def connect_to_mongo():
     """Initialize global MongoDB connection"""
     global client
@@ -15,6 +16,7 @@ async def connect_to_mongo():
         await client.admin.command("ping")
         print("✅ Connected to MongoDB!")
 
+
 async def close_mongo_connection():
     """Close global MongoDB connection"""
     global client
@@ -22,6 +24,7 @@ async def close_mongo_connection():
         client.close()
         print("🛑 MongoDB connection closed")
         client = None
+
 
 async def get_database():
     """Return the database instance (used as FastAPI dependency)"""
