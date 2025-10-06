@@ -13,18 +13,21 @@ class MongoUserRepository(UserInterface):
     async def get_all(self) -> List[User]:
         users = []
         async for user in self.collection.find():
+            user["_id"] = str(user["_id"])
             users.append(User(**user))
         return users
 
     async def get_by_id(self, user_id: str) -> Optional[User]:
         user = await self.collection.find_one({"_id": ObjectId(user_id)})
-        return User(**user) if user else None
-
+        if user:
+            user["_id"] = str(user["_id"])
+            return User(**user)
+        return None
 
     async def create(self, user: User) -> User:
         user_dict = user.model_dump(by_alias=True, exclude_none=True)
         result = await self.collection.insert_one(user_dict)
-        user.id = result.inserted_id
+        user.id = str(result.inserted_id)
         return user
 
     async def delete(self, user_id: str) -> bool:
