@@ -12,7 +12,11 @@ async def lifespan(app: FastAPI):
     # Shutdown
     await close_mongo_connection()
 
-app = FastAPI(title="User Clean Architecture API", lifespan=lifespan,)
+
+app = FastAPI(
+    title="User Clean Architecture API",
+    lifespan=lifespan,
+)
 
 # Include router
 app.include_router(user_router)
